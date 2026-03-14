@@ -30,8 +30,8 @@ public class PathologyFlowTest  extends BaseTest{
     private ConfigData config;
     String booking_id = null; 
 
-    @Test
-    public void BookingFlow() throws Exception {
+    @Test(invocationCount =10)
+     public void BookingFlow() throws Exception {
         // 1. setup
         setUp();                   
         wait = new WaitHelper(driver, 20);
@@ -71,8 +71,13 @@ public class PathologyFlowTest  extends BaseTest{
 //            wait.waitForClickable(By.xpath("//a[text()='Details']")).click();
            
             ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,300);");
-            WebElement bookNowBtn = wait.waitForClickable(By.xpath("(//button[text()='Book Now '])[2]"));
+            WebElement bookNowBtn = wait.waitForClickable(By.xpath("//button[text()=' Book Now ']"));
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", bookNowBtn);
+            
+            
+            //lead form close
+         WebElement leadform = wait.waitForClickable(By.xpath("(//button[@class='close'])[5]"));
+         leadform.click();
 
             // 6. enter mobile & fetch OTP
             wait.waitForVisible(By.id("mobile_number")).sendKeys(config.get("mobile"));
@@ -109,8 +114,18 @@ public class PathologyFlowTest  extends BaseTest{
             wait.waitForClickable(By.id("next-to-address")).click();
 
             // 8. date & slot selection
-            wait.waitForClickable(By.id("dp2")).click();
-            ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,500);");
+            
+            WebElement datePicker = wait.waitForClickable(By.id("dp2"));
+
+            ((JavascriptExecutor)driver).executeScript(
+                    "arguments[0].scrollIntoView({block:'center'});", datePicker);
+
+            Thread.sleep(500);
+
+            datePicker.click();
+          
+//            wait.waitForClickable(By.id("dp2")).click();
+//            ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,500);");
 
             
             /*
@@ -138,6 +153,8 @@ public class PathologyFlowTest  extends BaseTest{
             
             */
             
+        
+         //old loop logic without wait
             boolean slotFound = false;
  	       Set<String> triedDates = new HashSet<>(); // Track already clicked dates
 
@@ -163,9 +180,10 @@ public class PathologyFlowTest  extends BaseTest{
  	                   WebElement slotPanel = wait.waitForClickable(By.id("collection_time"));
  	                   Select s = new Select(slotPanel);
  	                   List<WebElement> allSlots = s.getOptions();
+ 	                   System.out.println("the slot size is "+allSlots.size());
 
  	                   if (allSlots.size() > 1) {
- 	                       s.selectByIndex(1); // pick second slot
+ 	                       s.selectByIndex(2); // pick second slot
  	                       slotFound = true;
  	                       break; // exit for loop
  	                   } else {
@@ -187,6 +205,12 @@ public class PathologyFlowTest  extends BaseTest{
  	               break;
  	           }
  	       }
+ 	      // loop end here
+ 	     
+          
+ 	        
+        
+           
             Thread.sleep(3000);
             // 9. payment selection
             ((JavascriptExecutor) driver).executeScript("scroll(0, 900);");
@@ -197,10 +221,12 @@ public class PathologyFlowTest  extends BaseTest{
                     By.cssSelector("#collapse5 > div > div > div.payment_wrap2 > div > div > div > label"));
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element9);
             Thread.sleep(2000);
-            wait.waitForClickable(By.id("payment_out")).click();
-               Thread.sleep(2000);
+           // wait.waitForClickable(By.id("payment_out")).click();
+           wait.waitForVisible(By.xpath("//a[@id='payment_out' and text()='Complete Order ']")).click();
+               Thread.sleep(3000);
             // 10. cancel booking
               String bookingId = wait.waitForClickable(By.xpath("(//div[@class='booking_info_inner'])[1]//h3")).getText();
+              System.out.println("the booking id is "+bookingId);
                
             WebElement fullCancel = wait.waitForVisible(By.xpath("(//button[@title='Cancel'])[1]"));
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", fullCancel);
@@ -208,7 +234,7 @@ public class PathologyFlowTest  extends BaseTest{
             Select reason = new Select(wait.waitForVisible(By.id("cancel_reason_id")));
             reason.selectByIndex(7);
 
-            wait.waitForClickable(By.xpath("//a[text()='Cancel Booking'][1]")).click();
+           wait.waitForClickable(By.xpath("//a[text()='Cancel Booking'][1]")).click();
             Thread.sleep(5000);
             System.out.println("Booking flow completed.");
             JsonReport.write("BookingFlow", "Pass",bookingId,"BookingFlow completed successfully");
@@ -245,20 +271,23 @@ public class PathologyFlowTest  extends BaseTest{
     	                if (rs.next()) {
     	                    otp = rs.getString("otp_code");
     	                    if (otp != null && otp.length() == 6) {
-    	                        logger.info("OTP fetched successfully for mobile {}", mobileNumber);
+    	                       // logger.info("OTP fetched successfully for mobile {}", mobileNumber);
     	                        return otp;
     	                    }
     	                }
     	            }
-    	            logger.info("OTP not found yet for mobile {}. Waiting {} ms before retry.", mobileNumber, interval);
+    	          //  logger.info("OTP not found yet for mobile {}. Waiting {} ms before retry.", mobileNumber, interval);
     	            Thread.sleep(interval);
     	        } catch (Exception e) {
-    	            logger.error("Error fetching OTP for mobile {}: {}", mobileNumber, e.getMessage(), e);
+    	          //  logger.error("Error fetching OTP for mobile {}: {}", mobileNumber, e.getMessage(), e);
     	        }
     	    }
     	    throw new RuntimeException("OTP not found for mobile: " + mobileNumber);
     }
-	
+    
+ 
+    
+    
 	
 
 }

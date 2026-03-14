@@ -69,6 +69,15 @@ public class WaitHelper {
         WebElement label = driver.findElement(By.xpath("(//input[@onclick='addMemberWithPackage(this)']/following-sibling::label)[1]"));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", label);
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", label);
+        
+        
+
+    }
+    
+    public void info(String msg) {
+    	
+    	
+    	System.out.println(msg);
     }
 	
 	

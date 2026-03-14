@@ -2,6 +2,7 @@ package base;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.logging.LogManager;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -16,15 +17,18 @@ import utility.ConfigData;
 public class BaseTest {
 
 	protected WebDriver driver;
-	 protected static  Logger logger ;
+	// protected static  Logger logger ;
+	// protected static Logger logger = LoggerFactory.getLogger(BaseTest.class);
 
 
     public void setUp() throws MalformedURLException {
         WebDriverManager.chromedriver().setup();
-      // ChromeOptions options = new ChromeOptions();
-     //  options.addArguments("--headless=new","--window-size=1920,1080","--no-sandbox","--disable-dev-shm-usage");
+       ChromeOptions options = new ChromeOptions();
+       options.addArguments("--headless=new","--window-size=1920,1200","--no-sandbox","--disable-dev-shm-usage","--disable-notifications","--disable-infobars","--remote-allow-origins=*");
        
-        logger = LoggerFactory.getLogger(BaseTest.class);
+       // logger = LoggerFactory.getLogger(BaseTest.class);
+       
+ 
         
         
 //        driver = new RemoteWebDriver(
@@ -32,13 +36,15 @@ public class BaseTest {
 //                options
 //        );
        
-        driver = new ChromeDriver();
+        driver = new ChromeDriver(options);
+        //logger.info("Launching Chrome Browser");
         driver.manage().window().maximize();
         driver.manage().deleteAllCookies();
     }
 
     public void tearDown() throws InterruptedException {
         if (driver != null) driver.quit();
+        //logger.info("Closing Browser");
         Thread.sleep(2000);
     }
 	
