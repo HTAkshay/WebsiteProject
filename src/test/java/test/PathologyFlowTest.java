@@ -234,7 +234,7 @@ public class PathologyFlowTest  extends BaseTest{
             Select reason = new Select(wait.waitForVisible(By.id("cancel_reason_id")));
             reason.selectByIndex(7);
 
-           wait.waitForClickable(By.xpath("//a[text()='Cancel Booking'][10]")).click();
+           wait.waitForClickable(By.xpath("//a[text()='Cancel Booking'][1]")).click();
             Thread.sleep(5000);
             System.out.println("Booking flow completed.");
             JsonReport.write("BookingFlow", "Pass",bookingId,"BookingFlow completed successfully");
