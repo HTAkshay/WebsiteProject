@@ -1,7 +1,7 @@
 {
   "testName" : "BookingFlow",
-  "status" : "FAIL",
-  "booking_id" : "N/A",
-  "timestamp" : 1773510465235,
-  "message" : "Expected condition failed: waiting for element to be clickable: By.id: dp2 (tried for 20 second(s) with 500 milliseconds interval)\nBuild info: version: '4.8.3', revision: 'e5e76298c3'\nSystem info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '21.0.6'\nDriver info: org.openqa.selenium.chrome.ChromeDriver\nCapabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 145.0.7632.76, chrome: {chromedriverVersion: 145.0.7632.117 (de4e5d6e13b..., userDataDir: C:\\Users\\AKSHAY~1\\AppData\\L...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:52315}, goog:processID: 46308, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: WINDOWS, proxy: Proxy(), se:cdp: ws://localhost:52315/devtoo..., se:cdpVersion: 145.0.7632.76, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}\nSession ID: c42df05109b17205866e6968ce446e6d"
+  "status" : "Pass",
+  "booking_id" : "1387727250723",
+  "timestamp" : 1773568635926,
+  "message" : "BookingFlow completed successfully"
 }

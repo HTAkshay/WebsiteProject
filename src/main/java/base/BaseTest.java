@@ -24,11 +24,11 @@ public class BaseTest {
     public void setUp() throws MalformedURLException {
         WebDriverManager.chromedriver().setup();
        ChromeOptions options = new ChromeOptions();
-       options.addArguments("--headless=new","--window-size=1920,1200","--no-sandbox","--disable-dev-shm-usage","--disable-notifications","--disable-infobars","--remote-allow-origins=*");
+       options.addArguments("--headless=new","--window-size=1920,1080","--no-sandbox","--disable-dev-shm-usage","--disable-notifications","--disable-infobars","--remote-allow-origins=*");
        
        // logger = LoggerFactory.getLogger(BaseTest.class);
        
- 
+//    		   --headless=new"
         
         
 //        driver = new RemoteWebDriver(

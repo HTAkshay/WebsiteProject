@@ -30,7 +30,7 @@ public class PathologyFlowTest  extends BaseTest{
     private ConfigData config;
     String booking_id = null; 
 
-    @Test()
+    @Test(invocationCount = 5)
      public void BookingFlow() throws Exception {
         // 1. setup
         setUp();                   
@@ -92,30 +92,24 @@ public class PathologyFlowTest  extends BaseTest{
                 otpField.sendKeys(String.valueOf(otp.charAt(i - 1)));
             }
             
-            wait.clickFirstMember();
-            Thread.sleep(3000);
+     //enter checkoutpage
             
-/*	            // 7. select member (first)
-        List<WebElement> membersList =
-            driver.findElements(By.xpath("(//input[@onclick='addMemberWithPackage(this)'])"));
-          //  wait.waitForAllVisible(By.xpath("(//input[@onclick='addMemberWithPackage(this)'])"));
-            if (!membersList.isEmpty() && !membersList.get(0).isSelected()) {
-                ((JavascriptExecutor) driver).executeScript("arguments[0].click();", membersList.get(0));
-            }
+                      wait.clickFirstMember();
+           
             
-            */
+       
 
-            WebElement nextbtn = driver.findElement(By.id("next-to-address"));
+    // Next button
+         WebElement nextbtn = wait.waitForVisible(By.id("next-to-address"));
 
-            ((JavascriptExecutor) driver).executeScript(
-                "arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", 
-                nextbtn );
-          //  ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,300);");
-            wait.waitForClickable(By.id("next-to-address")).click();
+         ((JavascriptExecutor) driver).executeScript(
+                 "arguments[0].scrollIntoView({block:'center'});", nextbtn);
+
+         wait.waitForClickable(By.id("next-to-address")).click();
 
             // 8. date & slot selection
             
-            WebElement datePicker = wait.waitForClickable(By.id("dp2"));
+            WebElement datePicker = wait.waitForVisible(By.id("dp2"));
 
             ((JavascriptExecutor)driver).executeScript(
                     "arguments[0].scrollIntoView({block:'center'});", datePicker);
@@ -214,7 +208,7 @@ public class PathologyFlowTest  extends BaseTest{
             Thread.sleep(3000);
             // 9. payment selection
             ((JavascriptExecutor) driver).executeScript("scroll(0, 900);");
-            WebElement element7 = wait.waitForVisible(By.cssSelector("#pay_wrp_cash > div > label > span"));
+            WebElement element7 = wait.waitForVisible(By.cssSelector("#pay_wrp_cash span.checkmark"));
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element7);
 
             WebElement element9 = wait.waitForVisible(
