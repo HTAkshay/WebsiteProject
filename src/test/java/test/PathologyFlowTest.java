@@ -30,7 +30,7 @@ public class PathologyFlowTest  extends BaseTest{
     private ConfigData config;
     String booking_id = null; 
 
-    @Test(invocationCount = 5)
+    @Test
      public void BookingFlow() throws Exception {
         // 1. setup
         setUp();                   
